@@ -1,14 +1,10 @@
 docker run -d \
   --mount type=bind,source="$(pwd)"/genesis.json,target=/opt/besu/genesis.json \
-  -e BESU_RPC_HTTP_ENABLED=true \
-  -e BESU_RPC_HTTP_API=ETH,NET,WEB3,ADMIN \
-  -e BESU_RPC_WS_ENABLED=true \
-  -e BESU_RPC_WS_API=ETH,NET,WEB3,ADMIN \
-  -e BESU_P2P_ENABLED=true \
-  -e BESU_P2P_DISCOVERY_ENABLED=true \
+  --mount type=bind,source="$(pwd)"/key.priv,target=/opt/besu/key.priv \
   hyperledger/besu:latest \
   --genesis-file=/opt/besu/genesis.json \
-  --bootnodes="enode://ca63e8f7193f116c62c596fa036896cccbfa71f8c9bb72ce0cab20b0b795824f2f5fa456b72e2186ae70bf6d3e73136e0083ae17dc90173dc348ec6512af60f4@10.106.16.2:30303" \
+  --node-private-key-file=/opt/besu/key.priv \
+  --bootnodes="enode://b7f04229f180072a93067bcc6504ef52466aaa77a9f723272058220c0d1e2e8cd758c602b5d3b139c035ec4059ee97d65f04d9c70f9df5d10cc871bc7787458f@10.106.16.2:30303" \
   --host-whitelist="*" \
   --rpc-http-host=0.0.0.0 \
   --rpc-ws-host=0.0.0.0
