@@ -1,4 +1,4 @@
-docker run -p 30303:30303 -p 30303:30303/udp -p 8545:8545 -p 8546:8546 \
+docker run -d -p 30303:30303 -p 30303:30303/udp -p 8545:8545 -p 8546:8546 \
   --mount type=bind,source="$(pwd)"/genesis.json,target=/opt/besu/genesis.json \
   --mount type=bind,source="$(pwd)"/key.priv,target=/opt/besu/key.priv \
   -e BESU_RPC_HTTP_ENABLED=true \
