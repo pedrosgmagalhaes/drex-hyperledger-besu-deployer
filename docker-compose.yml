@@ -1,0 +1,34 @@
+version: "3.7"
+
+services:
+  besu:
+    image: hyperledger/besu:latest
+    ports:
+      - "30303:30303"
+      - "8545:8545"
+      - "8546:8546"
+      - "8547:8547"
+    volumes:
+      - ./genesis.json:/opt/besu/genesis.json
+      - ./data/besu:/var/lib/besu
+    environment:
+      - BESU_RPC_HTTP_ENABLED=true
+      - BESU_RPC_HTTP_CORS_ORIGINS=all
+      - BESU_HOST_WHITELIST=*
+      - BESU_RPC_WS_ENABLED=true
+      - BESU_GRAPHQL_HTTP_ENABLED=true
+      - BESU_P2P_PORT=30303
+      - BESU_RPC_HTTP_PORT=8545
+      - BESU_RPC_WS_PORT=8546
+      - BESU_GRAPHQL_HTTP_PORT=8547
+    command: --genesis-file=/opt/besu/genesis.json
+      --data-path=/var/lib/besu
+      --rpc-http-enabled
+      --rpc-ws-enabled
+      --graphql-http-enabled
+      --p2p-port=30303
+      --rpc-http-cors-origins="*"
+      --host-whitelist="*"
+      --rpc-ws-host=0.0.0.0
+      --rpc-http-host=0.0.0.0
+      --graphql-http-host=0.0.0.0
