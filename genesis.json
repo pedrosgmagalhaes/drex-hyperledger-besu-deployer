@@ -1,17 +1,18 @@
 {
   "config": {
-    "chainid": 1217,
+    "chainId": 1217,
     "berlinBlock": 0,
     "qbft": {
-      "epochlength": 30000,
-      "blockperiodseconds": 5,
-      "requesttimeoutseconds": 10
-    }
+      "epochLength": 30000,
+      "blockPeriodSeconds": 5,
+      "requestTimeoutSeconds": 10
+    },
+    "minTransactionGasPrice": "0x0"
   },
   "nonce": "0x0",
-  "timestamp": "0x5b3d92d7",
+  "timestamp": "0x0",
   "extraData": "0xf87aa00000000000000000000000000000000000000000000000000000000000000000f8549464a702e6263b7297a96638cac6ae65e6541f4169943923390ad55e90c237593b3b0e401f3b08a0318594aefdb9a738c9f433e5b6b212a6d62f6370c2f69294c7eeb9a4e00ce683cf93039b212648e01c6c6b78c080c0",
-  "gasLimit": "0x29b92700",
+  "gasLimit": "0x1fffffffffffff",
   "difficulty": "0x1",
   "mixHash": "0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365",
   "coinbase": "0x0000000000000000000000000000000000000000",
