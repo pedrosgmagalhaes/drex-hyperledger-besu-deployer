@@ -1,6 +1,6 @@
 # Node Information
 data-path="data"
-genesis-file="../genesis.json"
+genesis-file="genesis.json"
 revert-reason-enabled=true
 identity="node1"
 
@@ -10,11 +10,6 @@ logging="INFO"
 nat-method="NONE"
 
 min-gas-price=0
-
-# Transaction Pool
-tx-pool-retention-hours=999
-tx-pool-limit-by-account-percentage=1
-tx-pool-max-size=20000
 
 # P2P network
 p2p-enabled=true
@@ -36,7 +31,7 @@ rpc-http-max-active-connections=2000
 permissions-nodes-contract-enabled=true
 permissions-nodes-contract-address="0x0000000000000000000000000000000000009999"
 permissions-nodes-contract-version=2
-permissions-accounts-contract-enabled=true
+permissions-accounts-contract-enabled=false
 
 # GRAPHQL-RPC (keeping disabled as per original config.toml)
 graphql-http-enabled=false
@@ -51,7 +46,5 @@ rpc-ws-port=8546
 rpc-ws-api=["DEBUG", "ETH", "ADMIN", "WEB3", "QBFT", "NET", "EEA", "PRIV", "PERM"]
 rpc-ws-authentication-enabled=false
 
-# Metrics (keeping disabled as per original config.toml)
+# Metrics (as per warning message, keeping disabled and omitting host and port)
 metrics-enabled=false
-metrics-host="0.0.0.0"
-metrics-port=9545
