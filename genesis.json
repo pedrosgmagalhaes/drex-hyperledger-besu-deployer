@@ -1,6 +1,6 @@
 {
   "config": {
-    "chainId": 381660001,
+    "chainId": 1217,
     "muirglacierblock": 0,
     "zeroBaseFee": true,
     "qbft": {
