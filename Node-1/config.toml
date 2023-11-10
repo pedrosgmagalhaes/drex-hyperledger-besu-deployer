@@ -1,6 +1,6 @@
 # Node Information
 data-path="data"
-genesis-file="./genesis.json"
+genesis-file="../genesis.json"
 revert-reason-enabled=true
 identity="node1"
 
