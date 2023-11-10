@@ -3,6 +3,7 @@
     "config": {
       "chainId": 1217,
       "muirglacierblock": 0,
+      "zeroBaseFee": true,
       "qbft": {
         "blockperiodseconds": 5,
         "epochlength": 30000,
@@ -10,25 +11,22 @@
       },
       "nonce": "0x0",
       "timestamp": "0x58ee40ba",
-      "gasLimit": "0x47b760",
+      "gasLimit": "0x1fffffffffffff",
+      "contractSizeLimit": 2147483647,
       "difficulty": "0x1",
       "mixHash": "0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365",
       "coinbase": "0x0000000000000000000000000000000000000000",
       "alloc": {
         "0x2AAB7C91daE887292FB69Ce190A1BB556BCf44a8": {
-          "privateKey": "3366d18d93a9f09b77ff0042871eb46e509dbde2046205325a3ffd328893e543",
           "balance": "90000000000000000000000"
         },
         "3B4897995Df47af15d3B7B0332bcEa5FE2AC669D": {
-          "privateKey": "33d63ab8b00ed4ffb510524342d6155589666aaa4ca71da069218cff1519eeab",
           "balance": "90000000000000000000000"
         },
         "8d0FFD39738251D8525Ac2ACE7E4Ccd41BEf30d9": {
-          "privateKey": "09cc57fc8ff80b8e26a5668b13c1483a9d733d4109212872f5e35ab9dfd131d8",
           "balance": "90000000000000000000000"
         },
         "a8288f7Eb367b350f05F5B8F9a5e1d7AB76d989a": {
-          "privateKey": "f6eccc3604af38089c1a0a82fcdf02151a8ec770f5163b8e53a0600cfeafc431",
           "balance": "90000000000000000000000"
         },
         "0x210114A4b066d26F34693e08c9440fb0d28F897b": {
