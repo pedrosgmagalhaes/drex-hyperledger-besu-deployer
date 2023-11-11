@@ -14,7 +14,7 @@ min-gas-price=0
 # P2P network
 p2p-enabled=true
 discovery-enabled=true
-p2p-port=30303
+p2p-port=30306
 max-peers=25
 
 host-allowlist=["*"]
@@ -24,7 +24,7 @@ rpc-http-api=["ADMIN", "ETH", "NET", "PERM", "QBFT"]
 rpc-http-cors-origins=["*"]
 rpc-http-enabled=true
 rpc-http-host="0.0.0.0"
-rpc-http-port=8545
+rpc-http-port=8565
 rpc-http-max-active-connections=2000
 
 # Permissioning
@@ -36,13 +36,13 @@ permissions-accounts-contract-enabled=false
 # GRAPHQL-RPC (keeping disabled as per original config.toml)
 graphql-http-enabled=false
 graphql-http-host="0.0.0.0"
-graphql-http-port=8547
+graphql-http-port=8567
 graphql-http-cors-origins=["*"]
 
 # WebSockets API (keeping disabled as per original config.toml)
 rpc-ws-enabled=false
 rpc-ws-host="0.0.0.0"
-rpc-ws-port=8546
+rpc-ws-port=8566
 rpc-ws-api=["DEBUG", "ETH", "ADMIN", "WEB3", "QBFT", "NET", "EEA", "PRIV", "PERM"]
 rpc-ws-authentication-enabled=false
 
