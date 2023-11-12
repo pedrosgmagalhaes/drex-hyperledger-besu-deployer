@@ -91,9 +91,3 @@ services:
     networks:
       besu-network:
         ipv4_address: 172.16.239.33
-
-5] 2023-11-11 23:21:25.352+00:00 | main | INFO  | DefaultP2PNetwork | Enode URL enode://3bb082274acab8aaf62dbe8f567b3f6706e6d7744e87723ab8026ddd6ea4349db4dba0b46dcb03558084874f10a1039bfa19ecfac37b75656f1f5d6e93e948da@127.0.0.1:30303
-[cbdc-simulator-bootnode] [2023-11-11 23:21:25] 2023-11-11 23:21:25.353+00:00 | main | INFO  | DefaultP2PNetwork | Node address 0xbe1c85d68d10528bc22b5858f58a7dcd996ed7de
-[cbdc-simulator-bootnode] [2023-11-11 23:21:25] 2023-11-11 23:21:25.373+00:00 | main | INFO  | NetworkRunner | Supported capabilities: [eth/62, eth/63, eth/64, eth/65, eth/66, eth/67, eth/68], [istanbul/100], [snap/1]
-[cbdc-simulator-bootnode] [2023-11-11 23:21:25] 2023-11-11 23:21:25.374+00:00 | main | INFO  | DefaultSynchronizer | Starting synchronizer.
-[cbdc-simulator-bootnode] [2023-11-11 23:21:25] 2023-11-11 23:21:25.377
