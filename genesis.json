@@ -1,19 +1,20 @@
 {
   "config" : {
     "chainId" : 1217,
-    "berlinBlock" : 0,
+    "muirglacierblock": 0,
     "qbft" : {
-      "blockperiodseconds" : 10,
-      "epochlength" : 30000,
-      "requesttimeoutseconds" : 10
+      "epochlength": 30000,
+      "blockperiodseconds": 5,
+      "requesttimeoutseconds": 10
     }
   },
   "nonce" : "0x0",
   "timestamp" : "0x58ee40ba",
-  "gasLimit": "0x0",
+  "gasLimit": "0x1fffffffffffff",
   "difficulty" : "0x1",
   "mixHash" : "0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365",
   "coinbase" : "0x0000000000000000000000000000000000000000",
+  "extraData" : "0xf87aa00000000000000000000000000000000000000000000000000000000000000000f85494627bc7c65fa61777a669b27ff81ba7b961c43d489403b8d7ca308ea356c1ec5e0469dcd964f119377494c79f605164149c02f6aa4b6d35bf20f95fe4048994f1d7224816bea6d3f3f80071afae5f2f46bbe93bc080c0",
   "alloc" : {
     "fe3b557e8fb62b89f4916b721be55ceb828dbd73" : {
       "privateKey" : "8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63",
@@ -33,6 +34,5 @@
     "210114A4b066d26F34693e08c9440fb0d28F897b" : {
       "balance" : "90000000000000000000000"
     }
-  },
-  "extraData" : "0xf87aa00000000000000000000000000000000000000000000000000000000000000000f85494627bc7c65fa61777a669b27ff81ba7b961c43d489403b8d7ca308ea356c1ec5e0469dcd964f119377494c79f605164149c02f6aa4b6d35bf20f95fe4048994f1d7224816bea6d3f3f80071afae5f2f46bbe93bc080c0"
+  }
 }
