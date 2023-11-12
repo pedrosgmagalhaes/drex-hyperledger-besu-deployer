@@ -8,6 +8,29 @@ networks:
         - subnet: 172.16.239.0/24
 
 services: 
+
+  bootnode:
+      container_name: bootnode
+      image: hyperledger/besu:latest
+      entrypoint:
+        - /bin/bash
+        - -c
+        - |
+          /opt/besu/bin/besu --data-path=/opt/besu/data \
+          --genesis-file=/opt/besu/genesis.json \
+          --rpc-http-enabled --rpc-http-cors-origins="*" \
+          --rpc-http-api=ADMIN,ETH,NET,PERM,QBFT --host-allowlist="*";
+
+      volumes:
+        - ./genesis.json:/opt/besu/genesis.json
+        - ./node1/data:/opt/besu/data
+      ports:
+        - 8545:8545
+        - 30303:30303
+      networks:
+        besu-network:
+          ipv4_address: 172.16.239.30
+          
   node1:
     container_name: node1
     image: hyperledger/besu:latest
@@ -38,7 +61,7 @@ services:
   
   node2:
     container_name: node2
-    image: hyperledger/besu
+    image: hyperledger/besu:latest
 
     entrypoint:
       - /bin/bash
@@ -66,7 +89,7 @@ services:
 
   node3:
     container_name: node3
-    image: hyperledger/besu
+    image: hyperledger/besu:latest
 
     entrypoint:
       - /bin/bash
