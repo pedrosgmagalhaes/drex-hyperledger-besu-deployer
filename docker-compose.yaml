@@ -1,0 +1,99 @@
+version: "3.4"
+
+networks:
+  besu-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.239.0/24
+
+services: 
+  node1:
+    container_name: node1
+    image: hyperledger/besu:latest
+
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        /opt/besu/bin/besu --data-path=/opt/besu/data \
+        --genesis-file=/opt/besu/genesis.json \
+        --bootnodes=enode://29d089bc13b262344db426bd2b7055f1fae813219e750e4b082350bf3d6001dfa55e867a01a63b56849681542acc0b03f81760f1261e527f6af4b6c45acccd44@172.16.239.30:30303  \
+        --rpc-http-enabled --rpc-http-cors-origins="*" \
+        --rpc-http-api=ADMIN,ETH,NET,PERM,QBFT --host-allowlist="*";
+
+    volumes:
+      - ./genesis.json:/opt/besu/genesis.json
+      - ./node2/data:/opt/besu/data
+      - ./log-config.xml:/config/log-config.xml
+    ports:
+      - 8546:8545
+      - 30304:30303
+    depends_on:
+      - bootnode
+    networks:
+      besu-network:
+        ipv4_address: 172.16.239.31
+
+  
+  node2:
+    container_name: node2
+    image: hyperledger/besu
+
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        sleep 10;
+        /opt/besu/bin/besu --data-path=/opt/besu/data \
+        --genesis-file=/opt/besu/genesis.json \
+        --bootnodes=enode://29d089bc13b262344db426bd2b7055f1fae813219e750e4b082350bf3d6001dfa55e867a01a63b56849681542acc0b03f81760f1261e527f6af4b6c45acccd44@172.16.239.30:30303  \
+        --rpc-http-enabled --rpc-http-cors-origins="*" \
+        --rpc-http-api=ADMIN,ETH,NET,PERM,QBFT --host-allowlist="*" \
+        
+    volumes:
+      - ./genesis.json:/opt/besu/genesis.json
+      - ./node3/data:/opt/besu/data
+      - ./log-config.xml:/config/log-config.xml
+    ports:
+      - 8547:8545
+      - 30305:30303
+    depends_on:
+      - bootnode
+    networks:
+      besu-network:
+        ipv4_address: 172.16.239.32
+
+  node3:
+    container_name: node3
+    image: hyperledger/besu
+
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        sleep 10;
+        /opt/besu/bin/besu --data-path=/opt/besu/data \
+        --genesis-file=/opt/besu/genesis.json \
+        --bootnodes=enode://c7b3c1871f30f6cf1ea2b64fd2799f884bedbc00a0a62e7550ae6f68de444cbdf539d1f8d79bb34208527cfa6482ccbb5072ffc1c13b5679b9d061edaa34cc2c@172.16.239.30:30303  \
+        --rpc-http-enabled --rpc-http-cors-origins="*" \
+        --rpc-http-api=ADMIN,ETH,NET,PERM,QBFT --host-allowlist="*" \
+        
+    volumes:
+      - ./genesis.json:/opt/besu/genesis.json
+      - ./node4/data:/opt/besu/data
+      - ./log-config.xml:/config/log-config.xml
+    ports:
+      - 8548:8545
+      - 30306:30303
+    depends_on:
+      - bootnode
+    networks:
+      besu-network:
+        ipv4_address: 172.16.239.33
+
+5] 2023-11-11 23:21:25.352+00:00 | main | INFO  | DefaultP2PNetwork | Enode URL enode://3bb082274acab8aaf62dbe8f567b3f6706e6d7744e87723ab8026ddd6ea4349db4dba0b46dcb03558084874f10a1039bfa19ecfac37b75656f1f5d6e93e948da@127.0.0.1:30303
+[cbdc-simulator-bootnode] [2023-11-11 23:21:25] 2023-11-11 23:21:25.353+00:00 | main | INFO  | DefaultP2PNetwork | Node address 0xbe1c85d68d10528bc22b5858f58a7dcd996ed7de
+[cbdc-simulator-bootnode] [2023-11-11 23:21:25] 2023-11-11 23:21:25.373+00:00 | main | INFO  | NetworkRunner | Supported capabilities: [eth/62, eth/63, eth/64, eth/65, eth/66, eth/67, eth/68], [istanbul/100], [snap/1]
+[cbdc-simulator-bootnode] [2023-11-11 23:21:25] 2023-11-11 23:21:25.374+00:00 | main | INFO  | DefaultSynchronizer | Starting synchronizer.
+[cbdc-simulator-bootnode] [2023-11-11 23:21:25] 2023-11-11 23:21:25.377
