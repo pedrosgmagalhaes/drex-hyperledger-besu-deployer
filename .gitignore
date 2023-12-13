@@ -8,3 +8,4 @@ node4/data/*
 config/bootnode_id
 config/nodes_config.toml
 config/accounts_config.toml
+config/qbftConfigFile.json
