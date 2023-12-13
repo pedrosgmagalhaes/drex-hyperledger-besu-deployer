@@ -26,10 +26,9 @@ generate_keys() {
         echo "Keys generated for $node_dir."
 
         if [[ $node_dir == "bootnode" ]]; then
-            # Extract and format the node ID from the public key
-            public_key=$(cat $PWD/$node_dir/data/key.pub)
-            formatted_key=$(echo ${public_key#0x}) # remove '0x' prefix if present
-            node_id=$(echo -n $formatted_key | xxd -r -p | openssl dgst -sha3-256 -binary | xxd -p -c 64)
+            # Extract the node ID from the public key by removing '0x' prefix
+            node_id=$(cat $PWD/$node_dir/data/key.pub | sed 's/^0x//')
+            echo "Node ID for $node_dir: $node_id"
             echo $node_id > $PWD/config/bootnode_id
         fi
     else
@@ -37,8 +36,6 @@ generate_keys() {
         exit 1
     fi
 }
-
-
 
 # Ask the user for the number of nodes
 read -p "Enter the number of nodes (including the bootnode): " num_nodes
@@ -76,8 +73,52 @@ do
     mkdir -p $node_dir/data
     generate_keys $node_dir
 
-    # Append to docker-compose.yaml
-    cat >> docker-compose.yaml << EOF
+    if [[ $node_dir == "bootnode" ]]; then
+        # Bootnode configuration
+        cat >> docker-compose.yaml << EOF
+  $node_dir:
+    container_name: $node_dir
+    image: hyperledger/besu:latest
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        /opt/besu/bin/besu --data-path=/opt/besu/data \
+        --genesis-file=/opt/besu/genesis.json \
+        --rpc-http-enabled \
+        --rpc-http-cors-origins="*" \
+        --min-gas-price=0 \
+        --p2p-host="0.0.0.0" \
+        --p2p-port=30303 \
+        --p2p-enabled=true \
+        --discovery-enabled=true \
+        --max-peers=25 \
+        --metrics-enabled \
+        --rpc-ws-enabled \
+        --permissions-accounts-config-file-enabled \
+        --permissions-accounts-config-file=/opt/besu/config/accounts_config.toml \
+        --permissions-nodes-config-file-enabled \
+        --permissions-nodes-config-file=/opt/besu/config/nodes_config.toml \
+        --rpc-http-api=ADMIN,ETH,NET,PERM,QBFT
+    volumes:
+      - ./config.toml:/opt/besu/config.toml
+      - ./genesis.json:/opt/besu/genesis.json
+      - ./config/bootnode_id:/opt/besu/config/bootnode_id
+      - ./config/accounts_config.toml:/opt/besu/config/accounts_config.toml
+      - ./config/nodes_config.toml:/opt/besu/config/nodes_config.toml
+      - ./$node_dir/data:/opt/besu/data
+    ports:
+      - 30303:30303
+      - 8545:8545
+      - 8546:8546
+      - 8547:8547
+    networks:
+      besu-network:
+        ipv4_address: 172.16.240.30
+EOF
+    else
+        # Other nodes configuration
+        cat >> docker-compose.yaml << EOF
   $node_dir:
     container_name: $node_dir
     image: hyperledger/besu:latest
@@ -86,19 +127,66 @@ do
       - -c
       - |
         sleep $((i*10));
-        /opt/besu/bin/besu --data-path=/opt/besu/data --bootnodes=enode://\$(cat /opt/besu/config/bootnode_id)@172.16.240.30:30303 --config-file=/opt/besu/config.toml --genesis-file=/opt/besu/genesis.json 
+        /opt/besu/bin/besu --data-path=/opt/besu/data \
+        --bootnodes=enode://\$(cat /opt/besu/config/bootnode_id)@172.16.240.30:30303 \
+        --config-file=/opt/besu/config.toml \
+        --genesis-file=/opt/besu/genesis.json \
+        --metrics-enabled \
+        --rpc-ws-enabled \
+        --permissions-accounts-config-file-enabled \
+        --permissions-accounts-config-file=/opt/besu/config/accounts_config.toml \
+        --permissions-nodes-config-file-enabled \
+        --permissions-nodes-config-file=/opt/besu/config/nodes_config.toml \
+        --rpc-http-api=ADMIN,ETH,NET,PERM,QBFT
     volumes:
       - ./config.toml:/opt/besu/config.toml
       - ./genesis.json:/opt/besu/genesis.json
-      - ./config:/opt/besu/config
+      - ./config/bootnode_id:/opt/besu/config/bootnode_id
+      - ./config/accounts_config.toml:/opt/besu/config/accounts_config.toml
+      - ./config/nodes_config.toml:/opt/besu/config/nodes_config.toml
       - ./$node_dir/data:/opt/besu/data
+    depends_on:
+      - bootnode
     networks:
       besu-network:
         ipv4_address: 172.16.240.$((30+i-1))
-
 EOF
+    fi
     echo "Node $node_dir setup complete."
 done
 
-echo "All nodes have been set up."
-echo "Setup Complete. Docker compose file created."
+
+# Generate permissions_config.toml
+echo "Generating nodes_config.toml and ccounts_config.toml files..."
+nodes_allowlist=()
+accounts_allowlist=()
+
+for (( i=1; i<=num_nodes; i++ ))
+do
+    if [[ $i -eq 1 ]]; then
+        node_dir="bootnode"
+    else
+        node_dir="node$((i-1))"
+    fi
+
+    # Extract the enode URL
+    node_id=$(cat $PWD/$node_dir/data/key.pub | sed 's/^0x//')
+    enode_url="enode://$node_id@172.16.240.$((30+i-1)):30303"
+    nodes_allowlist+=("\"$enode_url\"")
+
+    # Generate the Ethereum account address from the private key file
+    account_address=$(docker run --rm -v $PWD/$node_dir/data:/opt/besu/data hyperledger/besu:latest public-key export-address --node-private-key-file=/opt/besu/data/key --ec-curve=secp256k1 | tail -n 1 )
+    accounts_allowlist+=("\"$account_address\"")
+done
+
+# Generate nodes_config.toml
+echo "Generating nodes_config.toml..."
+printf "nodes-allowlist=[%s]\n" "$(IFS=, ; echo "${nodes_allowlist[*]}")" > $PWD/config/nodes_config.toml
+echo "nodes_config.toml generated."
+
+# Generate accounts_config.toml
+echo "Generating accounts_config.toml..."
+printf "accounts-allowlist=[%s]\n" "$(IFS=, ; echo "${accounts_allowlist[*]}")" > $PWD/config/accounts_config.toml
+echo "accounts_config.toml generated."
+
+echo "Setup Complete. Configuration files created."

@@ -2,6 +2,7 @@
   "config" : {
     "chainId" : 1217,
     "muirglacierblock": 0,
+    "zeroBaseFee": true,
     "qbft" : {
       "epochlength": 30000,
       "blockperiodseconds": 5,
