@@ -42,7 +42,14 @@ generate_keys() {
 }
 
 # Ask the user for the number of nodes
-read -p "Enter the number of nodes (including the bootnode): " num_nodes
+num_nodes=0
+while [[ $num_nodes -lt 4 ]]; do
+    read -p "Enter the number of nodes (including the bootnode, minimum 4): " num_nodes
+    if [[ $num_nodes -lt 4 ]]; then
+        echo "You must create at least 4 nodes. Please try again."
+    fi
+done
+
 
 # Create a directory for config if it doesn't exist
 echo "Setting up configuration..."

@@ -3,6 +3,8 @@
 ## Overview
 The `drex-hyperledger-besu-deployer` is a tool designed to streamline the process of building and deploying nodes for a Hyperledger Besu network. This tool is inspired by Drex, a Central Bank Digital Currency (CBDC) infrastructure from Brazil. It enables users to deploy a similar network in seconds.
 
+![Drex Hyperledger Besu Deployer](https://i.ibb.co/qrz1rk2/Capa.jpg)
+
 ## Requirements
 - Docker
 - Docker Compose
@@ -18,8 +20,32 @@ The `drex-hyperledger-besu-deployer` is a tool designed to streamline the proces
 2. Clone this repository.
 3. Navigate to the cloned directory and run the setup script.
 
-
 ## Installation
+
+### Docker and Docker Compose Installation
+
+#### Windows:
+1. Download and install Docker Desktop from [Docker Hub](https://hub.docker.com/editions/community/docker-ce-desktop-windows).
+2. Docker Compose comes integrated with Docker Desktop.
+
+#### Mac:
+1. Download and install Docker Desktop from [Docker Hub](https://hub.docker.com/editions/community/docker-ce-desktop-mac).
+2. Docker Compose is included with Docker Desktop.
+
+#### Linux:
+1. Install Docker using the package manager of your distribution. For example, on Ubuntu:
+   ```bash
+   sudo apt-get update
+   sudo apt-get install docker-ce docker-ce-cli containerd.io
+    ```
+
+2. Install Docker Compose by running the following commands:
+   ```bash
+   sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+   sudo chmod +x /usr/local/bin/docker-compose
+   ```
+
+### Getting started
 To install the `drex-hyperledger-besu-deployer`, follow these steps:
 1. Download or clone the repository.
 2. Open a Linux, Mac, or Windows terminal (Windows users can use Git Bash or a similar bash shell).
@@ -76,6 +102,11 @@ Once the setup is complete, you can launch your Hyperledger Besu network with th
 ```bash
 docker-compose up -d
 ```
+
+## Tutorial em Português
+Para um guia passo a passo em Português sobre como instalar e configurar o Docker e Docker Compose, assista ao seguinte vídeo tutorial no YouTube:
+
+[![Docker e Docker Compose: Tutorial em Português](https://img.youtube.com/vi/MzwDAqvCnWY/0.jpg)](https://www.youtube.com/watch?v=MzwDAqvCnWY)
 
 ## Be a Node - CBDC Simulator
 By using this setup, you can emulate the operation of a node in a CBDC (Central Bank Digital Currency) network. This provides an immersive and educational experience, closely mirroring the functionality of the Drex infrastructure.
