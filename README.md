@@ -3,7 +3,7 @@
 ## Overview
 The `drex-hyperledger-besu-deployer` is a tool designed to streamline the process of building and deploying nodes for a Hyperledger Besu network. This tool is inspired by Drex, a Central Bank Digital Currency (CBDC) infrastructure from Brazil. It enables users to deploy a similar network in seconds.
 
-![Drex Hyperledger Besu Deployer](https://i.ibb.co/qrz1rk2/Capa.jpg)
+[![Docker e Docker Compose: Tutorial em Português](https://i.ibb.co/7bc5K4v/CBDC3-MINUTES.jpg)](https://www.youtube.com/watch?v=wcjsAaBnzNI)
 
 ## Requirements
 - Docker
